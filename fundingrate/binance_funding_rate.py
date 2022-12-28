@@ -48,6 +48,7 @@ class funding_binance(object):
         #Select only necessary columns
         self.funding_rates_all = self.funding_rates_all[['symbol', 'fundingRate', 'date', 'hour']]        
         self.funding_rates_all.columns = ['market', 'rate', 'date', 'hour']
+        self.funding_rates_all['rate'] = self.funding_rates_all['rate'].apply(lambda x: x*100)
         self.funding_rates_all.reset_index()
         
     def get_formatted_funding_rates(self):
@@ -60,7 +61,7 @@ class funding_binance(object):
 if __name__ == "__main__":   
        
     #Include ticker symbols in config file or database
-    binance = funding_binance(['BTCUSDT','ETHUSDT'])    
+    binance = funding_binance(['RENUSDT'])    
     binance_rates = binance.get_formatted_funding_rates()    
     print(binance_rates)
     binance_rates.info()    

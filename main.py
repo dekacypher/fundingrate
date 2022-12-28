@@ -4,6 +4,9 @@ import os
 from sqlite3 import Error
 from sqlalchemy import create_engine
 from fundingrate.dydx_funding_rate import funding_dydx
+from fundingrate.binance_funding_rate import funding_binance
+
+
 
 def create_db(db_file):
         
@@ -51,6 +54,7 @@ def create_table(conn, create_table_sql):
         print(e)
 
 
+
 if __name__ == '__main__':
     
     #Set cronjob here with specific python environment
@@ -80,7 +84,8 @@ if __name__ == '__main__':
     #Query data from database. As data grows limit to data after certain date
     full_data = pd.read_sql_query('SELECT * FROM funding_rates', con=engine)        
     full_data.columns = ['market', 'rate_db', 'price_db', 'date', 'hour']
-    
+      
+
     #Obtain data from API
     tickers = pd.read_csv('ticker.csv')
     ticker_list = tickers.ticker.to_list()
